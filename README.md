@@ -14,7 +14,9 @@ For ease of use you may want to use "Python 3 ( PyTorch 1.6 Python 3.6 CPU Optim
 ## Dataset
 We will be using the Dog breed dataset that is provided by Udacity.<br>
 The dataset contains images of dogs belonging to a total of 133 different breeds from around the world. <br>
-We will be using these dog images to train our image classification model to classify between the  different dog breeds.
+We will be using these dog images to train our image classification model to classify between the  different dog breeds.<br>
+We will be uploading our dataset to S3 bucket so we could use it for training our model
+![S3 Upload Snapshot](https://github.com/Prafull-parmar/DogBreed-Classification-using-AWS-Sagemaker/blob/dogbreed_proj/snapshots/S3_upload_snapshot.PNG)
 
 ### Access
 Upload the data to an S3 bucket through the AWS Gateway so that SageMaker has access to the data. 
@@ -34,8 +36,8 @@ The jupyter notebook "train_and_deploy.ipynb" walks through implementation of  I
 
 ## Files used throughout the project
 
-* **hpo.py** - This scrip file contains code that will be used by the hyperparameter tuning jobs to train and test/validate the models with differenct hyperparameters to find the best hyperparameter
-* **train_deploy.py** - This script file contains the code that will be used by the training job to train and test/validate the model with the best hyperparameters that we got from the hyperparameter tuning
+* **hpo.py** - This script file contains code that will be used by the hyperparameter tuning jobs to train and test/validate the models with different hyperparameters to find the best hyperparameter
+* **train_deploy.py** - This script file contains the code that will be used by the training job to train and test/validate the model with the best hyperparameters that we got from hyperparameter tuning
 * **endpoint_inference.py** - This script contains code that is used by the deployed endpoint to perform some preprocessing( transformations) , serialization- deserialization and predictions/inferences  and post-processing using the saved model from the training job.
 * **train_and_deploy.ipynb** -- This jupyter notebook contains all the code and steps that we performed in this project and their outputs.
 
@@ -50,11 +52,26 @@ The jupyter notebook "train_and_deploy.ipynb" walks through implementation of  I
   * **Batch size** -- selected only two values [ 64, 128 ]   
 * Best Hyperparamters post Hyperparameter fine tuning are : <br>
  { 'batch_size': 128, 'eps': '1.5009475698763981e-09', 'lr': '0.0029088382171354715', 'weight_decay': '0.08373215706456894' }
+### Hyperparameter Tuning Sagemaker snapshot
+![HPO Tuning Job Sagemaker](https://github.com/Prafull-parmar/DogBreed-Classification-using-AWS-Sagemaker/blob/dogbreed_proj/snapshots/hpo_tuning_sagemaker_snapshot.PNG)
+### HyperParameter tuning Job
+![HPO Tuning Job Status](https://github.com/Prafull-parmar/DogBreed-Classification-using-AWS-Sagemaker/blob/dogbreed_proj/snapshots/hpo_job_success_snapshot.PNG)
+### Multiple training jobs triggered by the HyperParameter Tuning Job
+![HyperParameter Training Job Execution Snapshot](https://github.com/Prafull-parmar/DogBreed-Classification-using-AWS-Sagemaker/blob/dogbreed_proj/snapshots/Hyperparameter_tuning_job_executions.PNG)
+### All hyperParameter training jobs Summary
+![HyperParameter Training Job Summary Snapshot](https://github.com/Prafull-parmar/DogBreed-Classification-using-AWS-Sagemaker/blob/dogbreed_proj/snapshots/hpo_training_job_summary_snapshot.PNG)
+### Best hyperparameter Training Job
+![Best Hyperparameters Snapshot](https://github.com/Prafull-parmar/DogBreed-Classification-using-AWS-Sagemaker/blob/dogbreed_proj/snapshots/best_hyperparameters_snapshot.PNG)
+### Best hyperparameter Training Job Logs
+![Best Hyperparameters Training Job Log Snapshot](https://github.com/Prafull-parmar/DogBreed-Classification-using-AWS-Sagemaker/blob/dogbreed_proj/snapshots/best_hpo_training_job_logs.PNG)
 
 ## Debugging and Profiling
 
-We had set the Debugger hook to record and keep trach of the Loss Criterion metrics of the process in training and validation/testing phases. The Plot of the Cross entropy loss is shown in the jupyter notebook.
+We had set the Debugger hook to record and keep trach of the Loss Criterion metrics of the process in training and validation/testing phases. The Plot of the Cross entropy loss is shown below:
+![Cross Entropy Loss Tensor Snapshot](https://github.com/Prafull-parmar/DogBreed-Classification-using-AWS-Sagemaker/blob/dogbreed_proj/snapshots/debugging_tensor_plot.PNG)
 
+## Endpoint Metrics
+![Endpoint Metrics Snapshot](https://github.com/Prafull-parmar/DogBreed-Classification-using-AWS-Sagemaker/blob/dogbreed_proj/snapshots/Endpoint_cpu_metrics.PNG)
 ### Results
 Results look pretty good, as we had utilized the GPU while hyperparameter tuning and training of the fine-tuned ResNet50 model. We used the ml.g4dn.xlarge instance type for the runing the traiing purposes.
 However while deploying the model to an endpoint we used the "ml.t2.medium" instance type to save cost and resources.
@@ -69,6 +86,12 @@ However while deploying the model to an endpoint we used the "ml.t2.medium" inst
 * We will be doing this via two approaches
   * Firstly using the Prdictor class object
   * Secondly using the boto3 client
-
-**TODO** Remember to provide a screenshot of the deployed active endpoint in Sagemaker.
+### Deployed Active Endpoint Snapshot
+![Deployed Endpoint Snapshot](https://github.com/Prafull-parmar/DogBreed-Classification-using-AWS-Sagemaker/blob/dogbreed_proj/snapshots/Deployed_Endpoint.PNG)
+### Deployed Endpoint Logs Snapshot, showing that the request was recieved and processed successfullly by the endpoint
+![Deployed Endpoint Logs Snapshot](https://github.com/Prafull-parmar/DogBreed-Classification-using-AWS-Sagemaker/blob/dogbreed_proj/snapshots/Deployed_endpoint_query_logs.PNG)
+### Test cell used for testing the Endpoint Snapshot
+![Testing cell for Endpoint Snapshot](https://github.com/Prafull-parmar/DogBreed-Classification-using-AWS-Sagemaker/blob/dogbreed_proj/snapshots/test_image_sample_cell.PNG)
+### Sample output returned from endpoint Snapshot
+![Test Image sample output Snapshot](https://github.com/Prafull-parmar/DogBreed-Classification-using-AWS-Sagemaker/blob/dogbreed_proj/snapshots/sample_endpoint_test_output.PNG)
 
