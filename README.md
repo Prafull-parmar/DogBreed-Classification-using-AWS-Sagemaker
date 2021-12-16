@@ -8,7 +8,7 @@ Use AWS Sagemaker to train a pretrained model that can perform image classificat
 
 ## Project Set Up and Installation
 Enter AWS through the gateway in the course and open SageMaker Studio. <br>
-Open the jupter notebook "train_and_deployipynb" and start by installing all the dependencies. <br>
+Open the jupter notebook "train_and_deploy.ipynb" and start by installing all the dependencies. <br>
 For ease of use you may want to use "Python 3 ( PyTorch 1.6 Python 3.6 CPU Optimized)" Kernel so that you do not need to install most of the pytorch libraries <br>
 
 ## Dataset
@@ -38,7 +38,7 @@ The jupyter notebook "train_and_deploy.ipynb" walks through implementation of  I
 
 * **hpo.py** - This script file contains code that will be used by the hyperparameter tuning jobs to train and test/validate the models with different hyperparameters to find the best hyperparameter
 * **train_deploy.py** - This script file contains the code that will be used by the training job to train and test/validate the model with the best hyperparameters that we got from hyperparameter tuning
-* **endpoint_inference.py** - This script contains code that is used by the deployed endpoint to perform some preprocessing( transformations) , serialization- deserialization and predictions/inferences  and post-processing using the saved model from the training job.
+* **endpoint_inference.py** - This script contains code that is used by the deployed endpoint to perform some preprocessing (transformations) , serialization- deserialization and predictions/inferences  and post-processing using the saved model from the training job.
 * **train_and_deploy.ipynb** -- This jupyter notebook contains all the code and steps that we performed in this project and their outputs.
 
 ## Hyperparameter Tuning
@@ -54,11 +54,11 @@ The jupyter notebook "train_and_deploy.ipynb" walks through implementation of  I
  { 'batch_size': 128, 'eps': '1.5009475698763981e-09', 'lr': '0.0029088382171354715', 'weight_decay': '0.08373215706456894' }
 ### Hyperparameter Tuning Sagemaker snapshot
 ![HPO Tuning Job Sagemaker](https://github.com/Prafull-parmar/DogBreed-Classification-using-AWS-Sagemaker/blob/dogbreed_proj/snapshots/hpo_tuning_sagemaker_snapshot.PNG)
-### HyperParameter tuning Job
+### HyperParameter Tuning Job
 ![HPO Tuning Job Status](https://github.com/Prafull-parmar/DogBreed-Classification-using-AWS-Sagemaker/blob/dogbreed_proj/snapshots/hpo_job_success_snapshot.PNG)
 ### Multiple training jobs triggered by the HyperParameter Tuning Job
 ![HyperParameter Training Job Execution Snapshot](https://github.com/Prafull-parmar/DogBreed-Classification-using-AWS-Sagemaker/blob/dogbreed_proj/snapshots/Hyperparameter_tuning_job_executions.PNG)
-### All hyperParameter training jobs Summary
+### All HyperParameter training jobs Summary
 ![HyperParameter Training Job Summary Snapshot](https://github.com/Prafull-parmar/DogBreed-Classification-using-AWS-Sagemaker/blob/dogbreed_proj/snapshots/hpo_training_job_summary_snapshot.PNG)
 ### Best hyperparameter Training Job
 ![Best Hyperparameters Snapshot](https://github.com/Prafull-parmar/DogBreed-Classification-using-AWS-Sagemaker/blob/dogbreed_proj/snapshots/best_hyperparameters_snapshot.PNG)
@@ -67,8 +67,12 @@ The jupyter notebook "train_and_deploy.ipynb" walks through implementation of  I
 
 ## Debugging and Profiling
 
-We had set the Debugger hook to record and keep trach of the Loss Criterion metrics of the process in training and validation/testing phases. The Plot of the Cross entropy loss is shown below:
+We had set the Debugger hook to record and keep track of the Loss Criterion metrics of the process in training and validation/testing phases. The Plot of the Cross entropy loss is shown below:
 ![Cross Entropy Loss Tensor Snapshot](https://github.com/Prafull-parmar/DogBreed-Classification-using-AWS-Sagemaker/blob/dogbreed_proj/snapshots/debugging_tensor_plot.PNG)
+<br>**There is anomalous behaviour of not getting smooth output lines.**
+* **How would I go about fixing the anomalous behaviour?**
+  * Making some adjustments in the pretrained model to use a different set of the fully connected layers network, ideally should help to smoothen out the graph.**
+  * If I had more AWS credits, then would have changed the fc layers used in the model. Firstly would try by adding in one more fc layer on top of the existing two layers and check the results, and then if the results didn't improve much then would try by removing all the fc layers and keeping only one fc layer in the model and then rerun the tuning and training jobs and check the outputs
 
 ## Endpoint Metrics
 ![Endpoint Metrics Snapshot](https://github.com/Prafull-parmar/DogBreed-Classification-using-AWS-Sagemaker/blob/dogbreed_proj/snapshots/Endpoint_cpu_metrics.PNG)
