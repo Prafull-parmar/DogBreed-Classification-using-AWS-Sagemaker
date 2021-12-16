@@ -16,7 +16,7 @@ We will be using the Dog breed dataset that is provided by Udacity.<br>
 The dataset contains images of dogs belonging to a total of 133 different breeds from around the world. <br>
 We will be using these dog images to train our image classification model to classify between the  different dog breeds.<br>
 We will be uploading our dataset to S3 bucket so we could use it for training our model
-![S3 Upload Snapshot](https://github.com/Prafull-parmar/DogBreed-Classification-using-AWS-Sagemaker/blob/dogbreed_proj/snapshots/S3_upload_snapshot.PNG)
+![S3 Upload Snapshot](https://github.com/Prafull-parmar/DogBreed-Classification-using-AWS-Sagemaker/blob/main/snapshots/S3_upload_snapshot.PNG)
 
 ### Access
 Upload the data to an S3 bucket through the AWS Gateway so that SageMaker has access to the data. 
@@ -53,34 +53,32 @@ The jupyter notebook "train_and_deploy.ipynb" walks through implementation of  I
 * Best Hyperparamters post Hyperparameter fine tuning are : <br>
  { 'batch_size': 128, 'eps': '1.5009475698763981e-09', 'lr': '0.0029088382171354715', 'weight_decay': '0.08373215706456894' }
 ### Hyperparameter Tuning Sagemaker snapshot
-![HPO Tuning Job Sagemaker](https://github.com/Prafull-parmar/DogBreed-Classification-using-AWS-Sagemaker/blob/dogbreed_proj/snapshots/hpo_tuning_sagemaker_snapshot.PNG)
+![HPO Tuning Job Sagemaker](https://github.com/Prafull-parmar/DogBreed-Classification-using-AWS-Sagemaker/blob/main/snapshots/hpo_tuning_sagemaker_snapshot.PNG)
 ### HyperParameter Tuning Job
-![HPO Tuning Job Status](https://github.com/Prafull-parmar/DogBreed-Classification-using-AWS-Sagemaker/blob/dogbreed_proj/snapshots/hpo_job_success_snapshot.PNG)
+![HPO Tuning Job Status](https://github.com/Prafull-parmar/DogBreed-Classification-using-AWS-Sagemaker/blob/main/snapshots/hpo_job_success_snapshot.PNG)
 ### Multiple training jobs triggered by the HyperParameter Tuning Job
-![HyperParameter Training Job Execution Snapshot](https://github.com/Prafull-parmar/DogBreed-Classification-using-AWS-Sagemaker/blob/dogbreed_proj/snapshots/Hyperparameter_tuning_job_executions.PNG)
+![HyperParameter Training Job Execution Snapshot](https://github.com/Prafull-parmar/DogBreed-Classification-using-AWS-Sagemaker/blob/main/snapshots/Hyperparameter_tuning_job_executions.PNG)
 ### All HyperParameter training jobs Summary
-![HyperParameter Training Job Summary Snapshot](https://github.com/Prafull-parmar/DogBreed-Classification-using-AWS-Sagemaker/blob/dogbreed_proj/snapshots/hpo_training_job_summary_snapshot.PNG)
+![HyperParameter Training Job Summary Snapshot](https://github.com/Prafull-parmar/DogBreed-Classification-using-AWS-Sagemaker/blob/main/snapshots/hpo_training_job_summary_snapshot.PNG)
 ### Best hyperparameter Training Job
-![Best Hyperparameters Snapshot](https://github.com/Prafull-parmar/DogBreed-Classification-using-AWS-Sagemaker/blob/dogbreed_proj/snapshots/best_hyperparameters_snapshot.PNG)
+![Best Hyperparameters Snapshot](https://github.com/Prafull-parmar/DogBreed-Classification-using-AWS-Sagemaker/blob/main/snapshots/best_hyperparameters_snapshot.PNG)
 ### Best hyperparameter Training Job Logs
-![Best Hyperparameters Training Job Log Snapshot](https://github.com/Prafull-parmar/DogBreed-Classification-using-AWS-Sagemaker/blob/dogbreed_proj/snapshots/best_hpo_training_job_logs.PNG)
+![Best Hyperparameters Training Job Log Snapshot](https://github.com/Prafull-parmar/DogBreed-Classification-using-AWS-Sagemaker/blob/main/snapshots/best_hpo_training_job_logs.PNG)
 
 ## Debugging and Profiling
 
 We had set the Debugger hook to record and keep track of the Loss Criterion metrics of the process in training and validation/testing phases. The Plot of the Cross entropy loss is shown below:
-![Cross Entropy Loss Tensor Snapshot](https://github.com/Prafull-parmar/DogBreed-Classification-using-AWS-Sagemaker/blob/dogbreed_proj/snapshots/debugging_tensor_plot.PNG)
+![Cross Entropy Loss Tensor Snapshot](https://github.com/Prafull-parmar/DogBreed-Classification-using-AWS-Sagemaker/blob/main/snapshots/debugging_tensor_plot.PNG)
 <br>**There is anomalous behaviour of not getting smooth output lines.**
 * **How would I go about fixing the anomalous behaviour?**
   * Making some adjustments in the pretrained model to use a different set of the fully connected layers network, ideally should help to smoothen out the graph.**
   * If I had more AWS credits, then would have changed the fc layers used in the model. Firstly would try by adding in one more fc layer on top of the existing two layers and check the results, and then if the results didn't improve much then would try by removing all the fc layers and keeping only one fc layer in the model and then rerun the tuning and training jobs and check the outputs
 
 ## Endpoint Metrics
-![Endpoint Metrics Snapshot](https://github.com/Prafull-parmar/DogBreed-Classification-using-AWS-Sagemaker/blob/dogbreed_proj/snapshots/Endpoint_cpu_metrics.PNG)
+![Endpoint Metrics Snapshot](https://github.com/Prafull-parmar/DogBreed-Classification-using-AWS-Sagemaker/blob/main/snapshots/Endpoint_cpu_metrics.PNG)
 ### Results
 Results look pretty good, as we had utilized the GPU while hyperparameter tuning and training of the fine-tuned ResNet50 model. We used the ml.g4dn.xlarge instance type for the runing the traiing purposes.
 However while deploying the model to an endpoint we used the "ml.t2.medium" instance type to save cost and resources.
-
-
 
 
 ## Model Deployment
@@ -91,11 +89,11 @@ However while deploying the model to an endpoint we used the "ml.t2.medium" inst
   * Firstly using the Prdictor class object
   * Secondly using the boto3 client
 ### Deployed Active Endpoint Snapshot
-![Deployed Endpoint Snapshot](https://github.com/Prafull-parmar/DogBreed-Classification-using-AWS-Sagemaker/blob/dogbreed_proj/snapshots/Deployed_Endpoint.PNG)
+![Deployed Endpoint Snapshot](https://github.com/Prafull-parmar/DogBreed-Classification-using-AWS-Sagemaker/blob/main/snapshots/Deployed_Endpoint.PNG)
 ### Deployed Endpoint Logs Snapshot, showing that the request was recieved and processed successfullly by the endpoint
-![Deployed Endpoint Logs Snapshot](https://github.com/Prafull-parmar/DogBreed-Classification-using-AWS-Sagemaker/blob/dogbreed_proj/snapshots/Deployed_endpoint_query_logs.PNG)
+![Deployed Endpoint Logs Snapshot](https://github.com/Prafull-parmar/DogBreed-Classification-using-AWS-Sagemaker/blob/main/snapshots/Deployed_endpoint_query_logs.PNG)
 ### Test cell used for testing the Endpoint Snapshot
-![Testing cell for Endpoint Snapshot](https://github.com/Prafull-parmar/DogBreed-Classification-using-AWS-Sagemaker/blob/dogbreed_proj/snapshots/test_image_sample_cell.PNG)
+![Testing cell for Endpoint Snapshot](https://github.com/Prafull-parmar/DogBreed-Classification-using-AWS-Sagemaker/blob/main/snapshots/test_image_sample_cell.PNG)
 ### Sample output returned from endpoint Snapshot
-![Test Image sample output Snapshot](https://github.com/Prafull-parmar/DogBreed-Classification-using-AWS-Sagemaker/blob/dogbreed_proj/snapshots/sample_endpoint_test_output.PNG)
+![Test Image sample output Snapshot](https://github.com/Prafull-parmar/DogBreed-Classification-using-AWS-Sagemaker/blob/main/snapshots/sample_endpoint_test_output.PNG)
 
