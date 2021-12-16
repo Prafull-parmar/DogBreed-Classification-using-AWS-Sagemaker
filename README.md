@@ -31,6 +31,14 @@ The jupyter notebook "train_and_deploy.ipynb" walks through implementation of  I
 * Next we will be deploying our model. While deploying we will create our custom inference script. The custom inference script will be overriding a few functions that will be used by our deployed endpoint for making inferences/predictions.
 * Finally we will be testing out our model with some test images of dogs, to verfiy if the model is working as per our expectations.
 
+
+## Files used throughout the project
+
+* **hpo.py** - This scrip file contains code that will be used by the hyperparameter tuning jobs to train and test/validate the models with differenct hyperparameters to find the best hyperparameter
+* **train_deploy.py** - This script file contains the code that will be used by the training job to train and test/validate the model with the best hyperparameters that we got from the hyperparameter tuning
+* **endpoint_inference.py** - This script contains code that is used by the deployed endpoint to perform some preprocessing( transformations) , serialization- deserialization and predictions/inferences  and post-processing using the saved model from the training job.
+* **train_and_deploy.ipynb** -- This jupyter notebook contains all the code and steps that we performed in this project and their outputs.
+
 ## Hyperparameter Tuning
 
 * The ResNet50 model with a two Fully connected Linear NN layer's is used for this image classification problem. ResNet-50 is 50 layers deep and is trained on a million images of 1000 categories from the ImageNet database. Furthermore the model has a lot of trainable parameters, which indicates a deep architecture that makes it better for image recognition
